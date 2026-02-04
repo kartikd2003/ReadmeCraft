@@ -13,6 +13,8 @@ const defaults = {
   includeTrophies: true
 };
 
+const THEME_KEY = "gitfolio_theme";
+
 const el = (id) => document.getElementById(id);
 
 const fields = [
@@ -168,9 +170,35 @@ async function handleCopy() {
   }, 1500);
 }
 
+function applyTheme(theme) {
+  document.body.dataset.theme = theme;
+  const btn = el("themeToggle");
+  if (btn) {
+    btn.textContent = theme === "light" ? "Dark Mode" : "Light Mode";
+  }
+}
+
+function initTheme() {
+  const saved = localStorage.getItem(THEME_KEY);
+  const prefersLight = window.matchMedia && window.matchMedia("(prefers-color-scheme: light)").matches;
+  const theme = saved || (prefersLight ? "light" : "dark");
+  applyTheme(theme);
+}
+
+function toggleTheme() {
+  const current = document.body.dataset.theme === "light" ? "light" : "dark";
+  const next = current === "light" ? "dark" : "light";
+  localStorage.setItem(THEME_KEY, next);
+  applyTheme(next);
+}
+
 function bindEvents() {
   el("generateBtn").addEventListener("click", handleGenerate);
   el("copyBtn").addEventListener("click", handleCopy);
+  const toggleBtn = el("themeToggle");
+  if (toggleBtn) {
+    toggleBtn.addEventListener("click", toggleTheme);
+  }
   fields.forEach((id) => el(id).addEventListener("input", handleGenerate));
   ["includeStats", "includeStreak", "includeTrophies"].forEach((id) =>
     el(id).addEventListener("change", handleGenerate)
@@ -178,5 +206,6 @@ function bindEvents() {
 }
 
 loadDefaults();
+initTheme();
 bindEvents();
 handleGenerate();

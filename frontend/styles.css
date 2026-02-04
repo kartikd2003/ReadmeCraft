@@ -2,6 +2,8 @@
 
 :root {
   --bg: #0d1117;
+  --bg-radial-1: #1f2a44;
+  --bg-radial-2: #142438;
   --panel: #161b22;
   --panel-2: #0f141b;
   --text: #c9d1d9;
@@ -11,6 +13,25 @@
   --accent-2: #39d353;
   --danger: #f85149;
   --shadow: 0 20px 40px rgba(0, 0, 0, 0.45);
+  --preview: #0b0f14;
+  --logo-text: #0d1117;
+}
+
+body[data-theme="light"] {
+  --bg: #f5f7fb;
+  --bg-radial-1: #dbeafe;
+  --bg-radial-2: #c7d2fe;
+  --panel: #ffffff;
+  --panel-2: #f2f4f8;
+  --text: #0b1320;
+  --muted: #4b5563;
+  --border: #d0d7de;
+  --accent: #2563eb;
+  --accent-2: #16a34a;
+  --danger: #dc2626;
+  --shadow: 0 18px 32px rgba(15, 23, 42, 0.18);
+  --preview: #ffffff;
+  --logo-text: #0b1320;
 }
 
 * { box-sizing: border-box; }
@@ -18,8 +39,8 @@
 body {
   margin: 0;
   font-family: "Space Grotesk", "Segoe UI", system-ui, sans-serif;
-  background: radial-gradient(1200px 1200px at 20% -10%, #1f2a44, transparent),
-    radial-gradient(1200px 1200px at 100% 0%, #142438, transparent),
+  background: radial-gradient(1200px 1200px at 20% -10%, var(--bg-radial-1), transparent),
+    radial-gradient(1200px 1200px at 100% 0%, var(--bg-radial-2), transparent),
     var(--bg);
   color: var(--text);
 }
@@ -49,7 +70,7 @@ body {
   width: 52px;
   height: 52px;
   background: linear-gradient(135deg, #2dba4e, #58a6ff);
-  color: #0d1117;
+  color: var(--logo-text);
   font-weight: 700;
   border-radius: 14px;
   display: grid;
@@ -88,6 +109,10 @@ body {
   box-shadow: var(--shadow);
 }
 
+body[data-theme="light"] .panel {
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.95), rgba(242, 244, 248, 0.95));
+}
+
 .panel h2 {
   margin: 0 0 16px;
   font-size: 18px;
@@ -119,6 +144,12 @@ input, select, textarea {
 input:focus, select:focus, textarea:focus {
   border-color: var(--accent);
   box-shadow: 0 0 0 2px rgba(88, 166, 255, 0.2);
+}
+
+body[data-theme="light"] input:focus,
+body[data-theme="light"] select:focus,
+body[data-theme="light"] textarea:focus {
+  box-shadow: 0 0 0 2px rgba(37, 99, 235, 0.2);
 }
 
 .toggles {
@@ -172,7 +203,7 @@ textarea#output {
   border: 1px solid var(--border);
   padding: 16px;
   min-height: 340px;
-  background: #0b0f14;
+  background: var(--preview);
   overflow: auto;
 }
 
